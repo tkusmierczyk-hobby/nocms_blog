@@ -12,13 +12,16 @@ $CONTENT_MARKER = "<!--PUT YOUR CONTENT HERE-->";
 $HEADER_MARKER = "<!--PUT YOUR HEADER CONTENT HERE-->";
 
 
-# IS PATH VALID?
+# IS PATH VALID? (it must exist and stay inside the directory of this script)
 $path = get($_GET["path"], "index.php");
-$url = str_replace("%2F", "/", rawurlencode($path));        
-if (!file_exists($path)) {
+$root = realpath(__DIR__);
+$real = realpath($path); # resolves .. and symlinks; false for stream wrappers (file://, phar://, ...)
+if ($real === false || $root === false ||
+    ($real !== $root && strpos($real, $root.DIRECTORY_SEPARATOR) !== 0)) {
     echo "THE PATH DOESN'T EXIST!";
     exit(1);
 }
+$url = str_replace("%2F", "/", rawurlencode($path));
 
 
 # SELECT HOW TO DISPLAY THE CONTENT BASED ON TYPE (DIR VS FILE) AND FILE EXTENSION

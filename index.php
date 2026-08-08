@@ -328,16 +328,20 @@ function string2color($str) {
 
 
 function query($set=[], $drop=[]) {
-    /** Returns GET query with certain entries set or dropped. */
-    return implode_kv(drop_keys(array_merge($_GET, $set), $drop));
+    /** Returns GET query with certain entries set or dropped.
+     * The result is url-encoded and html-escaped, i.e. ready to be put
+     * inside a (quoted) href attribute. */
+    $query = implode_kv(drop_keys(array_merge($_GET, $set), $drop));
+    return htmlspecialchars($query, ENT_QUOTES, 'UTF-8');
 }
 
 
 function implode_kv($arr, $sep="&", $sepv="=") {
-    /** Glues array entries. */
+    /** Glues array entries (keys and values are url-encoded). */
     $str = "";
     foreach ($arr as $key => $val) {
-        $str .= $sep.$key.$sepv.$val;
+        if (is_array($val)) continue; # skip array-valued params, e.g. ?labels[]=x
+        $str .= $sep.rawurlencode($key).$sepv.rawurlencode($val);
     };
     return substr($str, strlen($sep));
 }
