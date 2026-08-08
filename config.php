@@ -6,12 +6,12 @@ $ENTRIES_DIR = './entries/'; # where to read list of entries (files and director
 
 # list of functions applied to each entry to extract fields (e.g., path, url, title, title_html, labels_html, etc.)
 $ENRICHERS = [
-              "timestamp" => parse_date, "time" => timestamp_html1, # use time parsed from file name 
-            //   "timestamp" => retrieve_mtime, "time" => timestamp_html2, # uncomment to use mtime 
-              "labels" => parse_labels, "labels_html" => format_labels_html,  # comment out if not using labels (PHP7); leave it anyways for PHP8
-              "title_html" => format_title_html, 
-              "icon_html" => retrieve_icon_html, 
-              "abstract_html" => retrieve_abstract_html
+              "timestamp" => "parse_date", "time" => "timestamp_html1", # use time parsed from file name 
+            //   "timestamp" => "retrieve_mtime", "time" => "timestamp_html2", # uncomment to use mtime 
+              "labels" => "parse_labels", "labels_html" => "format_labels_html",  # comment out if not using labels (PHP7); leave it anyways for PHP8
+              "title_html" => "format_title_html", 
+              "icon_html" => "retrieve_icon_html", 
+              "abstract_html" => "retrieve_abstract_html"
             ];
 
 # how to sort entries (decides whether entry $e1 should go before $e2)
