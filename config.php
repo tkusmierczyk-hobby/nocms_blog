@@ -8,7 +8,7 @@ $ENTRIES_DIR = './entries/'; # where to read list of entries (files and director
 $ENRICHERS = [
               "timestamp" => parse_date, "time" => timestamp_html1, # use time parsed from file name 
             //   "timestamp" => retrieve_mtime, "time" => timestamp_html2, # uncomment to use mtime 
-              "labels" => parse_labels, "labels_html" => format_labels_html,  # comment out if not using labels
+              "labels" => parse_labels, "labels_html" => format_labels_html,  # comment out if not using labels (PHP7); leave it anyways for PHP8
               "title_html" => format_title_html, 
               "icon_html" => retrieve_icon_html, 
               "abstract_html" => retrieve_abstract_html
