@@ -45,7 +45,9 @@ foreach ($entries as $ix => $entry) {
 usort($entries, $ORDER_PREDICATE); 
 
 # filter entries by page number
-if (!is_null($_GET["display"])) $PER_PAGE = $_GET["display"];
+// must stay a positive integer: 0 divides by zero, negative/fractional values
+// make $last_page huge and the page-links loop below runs (almost) forever
+if (!is_null($_GET["display"])) $PER_PAGE = max(1, (int)$_GET["display"]);
 [$page, $start, $end, $last_page]= paging($entries, $PER_PAGE, $_GET["page"]);
 [$start, $end] = [count($entries)-$end, count($entries)-$start]; # paging uses reversed order of ixs
 $entries = array_slice($entries, $start, $end-$start, true);
@@ -341,7 +343,7 @@ function implode_kv($arr, $sep="&", $sepv="=") {
     $str = "";
     foreach ($arr as $key => $val) {
         if (is_array($val)) continue; # skip array-valued params, e.g. ?labels[]=x
-        $str .= $sep.rawurlencode($key).$sepv.rawurlencode($val);
+        $str .= $sep.rawurlencode((string)$key).$sepv.rawurlencode((string)$val);
     };
     return substr($str, strlen($sep));
 }
