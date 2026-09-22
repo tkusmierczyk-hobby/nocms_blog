@@ -64,7 +64,7 @@ $ABSTRACT_HREF = "show.php?path=@url";
 
 $SHOW_LABELS_PANEL = true;
 $EMPTY_LABEL = "?";
-$LABEL_COLORS = ["#3498DB", "Tomato", "Thistle", "Turquoise", "Red","Maroon","LightGreen","Green","Salmon","Teal","CornflowerBlue","Navy", "Coral", "Gold", "Black"];  # palette used for labels
+$LABEL_COLORS = ["#3498DB", "Tomato", "Thistle", "Turquoise", "Red","Maroon","LightGreen","Green","Salmon","Teal","CornflowerBlue","Navy", "Coral", "DarkGoldenrod", "Black"];  # palette used for labels
 $LABEL_DISABLED_COLOR = "Gray";
 
 ###############################################################################

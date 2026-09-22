@@ -324,8 +324,9 @@ function string2color($str) {
     #$code = dechex(crc32($str));
     #$code = "#".substr($code, 0, 6);
     global $LABEL_COLORS;
-    $code = $LABEL_COLORS[crc32($str) % sizeof($LABEL_COLORS)];
-    return $code;
+    // crc32() is negative for half of all strings on 32-bit PHP; use its unsigned value
+    $ix = (int) fmod((float) sprintf('%u', crc32($str)), count($LABEL_COLORS));
+    return $LABEL_COLORS[$ix];
 }
 
 
