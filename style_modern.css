@@ -1,0 +1,396 @@
+/* ---------------------------------------------------------------------------
+   Palette & base
+   ------------------------------------------------------------------------- */
+
+:root {
+    --bg: #fafafa;
+    --text: #222222;
+    --muted: #6b6b6b;
+    --line: #e2e2e2;
+    --hover: #f0f0f0;
+    --chip: #ececec;
+    --accent: #2a78b8;
+    --radius: 8px;
+}
+
+body {
+    margin: auto;
+    margin-top: 150px; /* room for the logo */
+    padding: 15px;
+
+    max-width: 920px;
+
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans", Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+
+    /* actions.js sets the same size/position on load; this avoids a flash before it runs */
+    background-color: var(--bg);
+    background-image: url("logo.png");
+    background-repeat: no-repeat;
+    background-size: 920px 140px;
+    background-position: center top;
+}
+
+@media (max-width: 950px) {
+    body {
+        background-position: left top;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: var(--accent);
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* ---------------------------------------------------------------------------
+   Post content (show.php templates and custom pages)
+   ------------------------------------------------------------------------- */
+
+h1, h2, h3, h4 {
+    line-height: 1.3;
+    margin: 1.6em 0 0.6em;
+}
+
+h1 {
+    font-size: 1.9rem;
+    margin-top: 0.4em;
+}
+
+h2 {
+    font-size: 1.45rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+}
+
+h4 {
+    font-size: 1rem;
+}
+
+p {
+    margin: 0 0 1em;
+}
+
+ul, ol {
+    padding-left: 1.5em;
+}
+
+li {
+    margin: 0.3em 0;
+}
+
+blockquote {
+    margin: 1.2em 0;
+    padding: 0.2em 1.2em;
+    border-left: 4px solid var(--line);
+    color: var(--muted);
+}
+
+code, pre {
+    font-family: ui-monospace, SFMono-Regular, "DejaVu Sans Mono", Menlo, Consolas, monospace;
+    font-size: 0.9em;
+}
+
+code {
+    padding: 0.1em 0.35em;
+    border-radius: 4px;
+    background-color: var(--chip);
+}
+
+pre {
+    padding: 12px 16px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    border-radius: var(--radius);
+    background-color: var(--chip);
+    line-height: 1.5;
+}
+
+pre code {
+    padding: 0;
+    background: none;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+th, td {
+    padding: 6px 12px;
+    border: 1px solid var(--line);
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--line);
+    margin: 2em 0;
+}
+
+/* entry pages: narrower column for comfortable reading, aligned with the logo */
+aside,
+aside + article {
+    max-width: 46rem;
+    padding: 0 16px;
+}
+
+.returnBtn {
+    display: inline-block;
+    margin-bottom: 10px;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.returnBtn:before {
+    content: "\2190  All posts";
+}
+
+/* ---------------------------------------------------------------------------
+   Labels nav panel
+   ------------------------------------------------------------------------- */
+
+nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 20px 0 16px;
+    padding: 0 16px;
+}
+
+.label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 1px 10px;
+
+    font-size: 0.85rem;
+    line-height: 1.6;
+    white-space: nowrap;
+
+    color: var(--muted);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+}
+
+.label:hover {
+    text-decoration: none;
+}
+
+/* index.php writes the label color into a style attribute: "color" only for the labels of an
+   entry and for hovered nav labels, "color" plus "border-color" for a selected nav label. */
+.labelNav:hover {
+    border-color: currentColor;
+}
+
+.labelNav[style*="border-color"] {
+    background-color: color-mix(in srgb, currentColor 14%, transparent);
+    font-weight: 600;
+}
+
+/* "select all", "clear" and "match any/all" buttons */
+.labelNavEnableAll,
+.labelNavDisableAll,
+.labelNavMatchAny,
+.labelNavMatchAll {
+    border-color: transparent;
+    background-color: var(--chip);
+    color: var(--muted);
+    font-weight: 600;
+}
+
+.labelNavEnableAll:hover,
+.labelNavDisableAll:hover,
+.labelNavMatchAny:hover {
+    background-color: #dedede;
+    border-color: transparent;
+    color: var(--text);
+}
+
+.labelNavMatchAll:hover {
+    border-color: transparent;
+}
+
+.labelNavMatchAny,
+.labelNavMatchAll {
+    margin-right: 10px;
+}
+
+.labelNavMatchAll {
+    background-color: var(--accent);
+    color: white;
+}
+
+.labelNavMatchAll:hover {
+    background-color: #1f5f94;
+    border-color: transparent;
+}
+
+.labelNavEnableAll:before {
+    content: "+ all";
+}
+
+.labelNavDisableAll:before {
+    content: "\00d7  none";
+}
+
+.labelNavMatchAny:before {
+    content: "match any";
+}
+
+.labelNavMatchAll:before {
+    content: "match all";
+}
+
+/* ---------------------------------------------------------------------------
+   List of entries
+   ------------------------------------------------------------------------- */
+
+article {
+    margin: 0;
+}
+
+.entry {
+    display: block;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: auto; /* contain the floated icon */
+    color: #444444; /* abstract text */
+    font-size: 0.95rem;
+}
+
+.entry:hover {
+    background-color: var(--hover);
+}
+
+.entryHeader {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 6px;
+    margin-bottom: 4px;
+}
+
+.entryDate {
+    min-width: 6.2em;
+    margin-right: 8px;
+    color: var(--muted);
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+}
+
+.entryLink {
+    flex: 1 1 18em;
+    color: var(--text);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.entryLabel {
+    font-size: 0.8rem;
+    background-color: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.entryIcon {
+    float: left;
+    max-height: 120px;
+    margin: 12px 16px 4px 0;
+    border-radius: 6px;
+    -webkit-filter: grayscale(25%);
+    filter: grayscale(25%);
+}
+
+.entryImg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90%;
+}
+
+.readmoreLink {
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+    .entryDate:empty {
+        display: none;
+    }
+}
+
+/* ---------------------------------------------------------------------------
+   Paging (footer)
+   ------------------------------------------------------------------------- */
+
+footer br {
+    display: none;
+}
+
+footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin: 28px 0 40px;
+}
+
+.pageLink {
+    min-width: 2.4em;
+    padding: 3px 10px;
+
+    text-align: center;
+    font-size: 0.9rem;
+    font-variant-numeric: tabular-nums;
+
+    color: var(--text);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+}
+
+.pageLink:hover {
+    text-decoration: none;
+    background-color: var(--chip);
+}
+
+.pageLinkEnabled,
+.pageLinkEnabled:hover {
+    color: white;
+    background-color: var(--text);
+    border-color: var(--text);
+    font-weight: 600;
+}
+
+.pageLinkPrev {
+    order: 0;
+}
+
+.pageLinkEnabled,
+.pageLinkDisabled {
+    order: 1;
+}
+
+.pageLinkNext {
+    order: 2;
+}
+
+.pageLinkPrev:before {
+    content: "\2190  Newer";
+}
+
+.pageLinkNext:before {
+    content: "Older  \2192";
+}

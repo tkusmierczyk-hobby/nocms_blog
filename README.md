@@ -18,7 +18,7 @@
 
 ## Configuration
 
-Look and feel can be configured by editing [style.css](style.css) (and respective HTML templates if needed). Most of behavior can be adjusted by editing `Configuration` section of [index.php](index.php): The main logic works by parsing list of files and folders from which it creates a list of records `field_name => field_value`, e.g. url, path, timestamp etc. Then, the records are sorted, filtered by labels and used to format entries following `ENTRY_FORMAT`.  
+Look and feel is chosen in [style.css](style.css), which imports either [style_modern.css](style_modern.css) or [style_classic.css](style_classic.css) (comment out one, uncomment the other); the imported file can be edited to adjust the look further (and respective HTML templates if needed). Most of behavior can be adjusted by editing `Configuration` section of [index.php](index.php): The main logic works by parsing list of files and folders from which it creates a list of records `field_name => field_value`, e.g. url, path, timestamp etc. Then, the records are sorted, filtered by labels and used to format entries following `ENTRY_FORMAT`.  
 
 
 ## Files
@@ -26,7 +26,9 @@ Look and feel can be configured by editing [style.css](style.css) (and respectiv
  * [entries/](entries) - source directory where the entries are stored (see [samples](entries))
  * [index.php](index.php) - the main file enumerating entries
  * [config.php](config.php) - configuration of filtering, parsing and rendering
- * [style.css](style.css) - CSS feel-and-look specification
+ * [style.css](style.css) - selects one of the two stylesheets below
+ * [style_modern.css](style_modern.css) - CSS feel-and-look specification
+ * [style_classic.css](style_classic.css) - CSS feel-and-look specification (the original look)
  * [actions.js](actions.js) - JavasSript code used to adjust logo position and size (for small displays)
  * [show.php](show.php) - displays entries (invoked from `ENTRY_FORMAT` in [index.php](index.php) -- optional)
  * [template_entry_index.html](template_entry_index.html) - HTML template used to render content stored in folders
