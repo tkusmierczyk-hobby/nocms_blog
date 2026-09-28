@@ -13,3 +13,8 @@ function onResize() {
 function onLoad() {
     onResize();
 };
+
+function unfold(button) {
+    /** Replaces a folded range of pages (e.g. 0-9) with the buttons it holds. */
+    button.parentNode.className = "pageFold pageFoldOpen";
+};

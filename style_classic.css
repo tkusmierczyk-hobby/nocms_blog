@@ -339,3 +339,19 @@ footer {
 }
 
 
+
+/* Folded ranges of pages (e.g. 0-9); unfold() in actions.js opens them */
+
+.pageFold,
+.pageFoldOpen > .pageFoldContent {
+    display: contents;
+}
+
+.pageFoldContent,
+.pageFoldOpen > .pageLinkRange {
+    display: none;
+}
+
+.pageLinkRange {
+    cursor: pointer;
+}

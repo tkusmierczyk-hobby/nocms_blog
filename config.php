@@ -31,6 +31,9 @@ $ORDER_PREDICATE = function($e1, $e2) {
 # how many entries per page
 $PER_PAGE = 4;
 
+# how many page buttons to show before they get folded into ranges (e.g. [0-9])
+$FOLD_PAGES = 3;
+
 // $HEADER = "<br /><h1>List of entries</h1>";
 $HEADER = "<br />";
 

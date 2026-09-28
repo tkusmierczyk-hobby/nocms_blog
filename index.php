@@ -103,11 +103,11 @@ echo("<a class='pageLink pageLinkNext' style='visibility: $visibility' href='?$q
 echo "<br />";
 
 # pages
-$labels = implode(",", $ENABLED_LABELS); 
-for ($p=$last_page; ($p>=0) && ($last_page>0); $p--) {        
-    $query = query(["page"=>$p]);
-    echo "<a class='pageLink ".($p==$page?"pageLinkEnabled":"pageLinkDisabled")."' href='?$query'>$p</a>\n";
-}
+$labels = implode(",", $ENABLED_LABELS);
+$fold_pages = max(2, (int) get($FOLD_PAGES, 10)); # how many buttons before folding into ranges
+$size = 1; # how many pages a single button covers
+while (($last_page+1)/$size > $fold_pages) $size *= $fold_pages;
+if ($last_page>0) echo(page_links_html(0, $last_page, $size, $page, $fold_pages));
 
 
 
@@ -164,6 +164,31 @@ function paging($entries, $per_page, $page) {
 
     $page = max([min([$page, $last_page]), 0]);
     return [$page, $start, $end, $last_page];
+};
+
+
+function page_links_html($from, $to, $size, $page, $fold_pages) {
+    /** Returns links to the pages $from..$to (the newest first). Every $size consecutive pages are
+     * folded into a single range button (e.g. 0-9) which unfold() in actions.js replaces with the
+     * $fold_pages parts it holds. A range holding the current page is printed as its parts. */
+    $html = "";
+    for ($f=$from; $f<=$to; $f+=$size) {
+        $t = min($f+$size-1, $to);
+        $parts = ceil(($t-$f+1)/($size/$fold_pages)); # how many buttons the range would unfold into
+        if ($size<=1) { # a single page
+            $query = query(["page"=>$f]);
+            $links = "<a class='pageLink ".($f==$page?"pageLinkEnabled":"pageLinkDisabled")."' href='?$query'>$f</a>\n";
+        } else if (($page>=$f && $page<=$t) || $parts<$fold_pages) { # never fold the current page
+            $links = page_links_html($f, $t, $size/$fold_pages, $page, $fold_pages); # nor too few parts
+        } else { # fold the range into a single button hiding the parts until it is clicked
+            $links = "<span class='pageFold'>".
+                     "<a class='pageLink pageLinkDisabled pageLinkRange' onclick='unfold(this)'>$f-$t</a>".
+                     "<span class='pageFoldContent'>".page_links_html($f, $t, $size/$fold_pages, $page, $fold_pages)."</span>".
+                     "</span>\n";
+        }
+        $html = $links.$html; # pages are listed in the reversed order
+    }
+    return $html;
 };
 
 
