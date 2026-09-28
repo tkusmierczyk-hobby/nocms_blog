@@ -409,4 +409,9 @@ footer {
 
 .pageLinkRange {
     cursor: pointer;
+    color: var(--muted);
+}
+
+.pageLinkRange:hover {
+    color: var(--text);
 }

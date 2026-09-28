@@ -354,4 +354,8 @@ footer {
 
 .pageLinkRange {
     cursor: pointer;
+    color: #505050;
+    background-color: #f4f4f4;
+    outline: 1px dashed #c8c8c8;
+    outline-offset: -1px;
 }
